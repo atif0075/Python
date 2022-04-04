@@ -18,7 +18,6 @@ menu = """
 2. Enter Diver Data
 3. Generate Report
 4. Create csv file
-5. Import Data
 Q. Quit
 """
 # A condition to check the user input that never end until a suitable input is given
@@ -43,7 +42,7 @@ while True:
     elif userInput == '2':
         # Allow the user to enter the diver data
         # The starting points which are used on permit a condition to execute or not
-        checker = True
+
         endFlag = False
         # An empty list to store the judge score data
         judgeScore = []
@@ -52,6 +51,7 @@ while True:
 
         # Condition to validate the user input
         while endFlag == False:
+            checker = True
             TT = 0
             dificultyStore = []
             # the user input
@@ -74,7 +74,6 @@ while True:
                 tempList = []
                 tempJudgeScore = []
                 emptyList.append(name)
-
                 judge = 1
                 # store all judge score data
                 while judge != 6:
@@ -92,33 +91,36 @@ while True:
                         else:
                             print("Invalid Entry")
                             checker = False
+                            break
                         judge += 1
                     else:
                         break
                 # appending the data to their related Lists
-                dificultyBigStore.append(dificultyStore)
-                judgeScore.append(tempJudgeScore)
-                #  Remove the highest judge score, remove the lowest
-                # judge score and total the remaining three in TT
-                tempList = sorted(tempList)
-                tempList = tempList[1:len(tempList) - 1]
-                smallRecord = []
-                # Getting value for TT
-                for i in tempList:
-                    TT += float(i)
-                smallRecord.append(TT)
-                smallRecord.append(round(TT * dificulty, 2))
-                # Try if user input is the reound number
-                try:
-                    smallRecord.append(defRound)
-                    storeSummary.append(defRound)
-                # if not, then use the default round number which is 1
-                except:
-                    smallRecord.append(1)
-                record.append(smallRecord)
                 if checker == True:
-                    List.append(emptyList)
-            # Ask the user if he wants to continue 
+
+                    dificultyBigStore.append(dificultyStore)
+                    judgeScore.append(tempJudgeScore)
+                    #  Remove the highest judge score, remove the lowest
+                    # judge score and total the remaining three in TT
+                    tempList = sorted(tempList)
+                    tempList = tempList[1:len(tempList) - 1]
+                    smallRecord = []
+                    # Getting value for TT
+                    for i in tempList:
+                        TT += float(i)
+                    smallRecord.append(TT)
+                    smallRecord.append(round(TT * dificulty, 2))
+                    # Try if user input is the reound number
+                    try:
+                        smallRecord.append(defRound)
+                        storeSummary.append(defRound)
+                    # if not, then use the default round number which is 1
+                    except:
+                        smallRecord.append(1)
+                    record.append(smallRecord)
+                    if checker == True:
+                        List.append(emptyList)
+            # Ask the user if he wants to continue
             userInput = input("Continue? [Y/N] ")
             # if y or Y, then continue
             while userInput.lower() != 'y' and userInput.lower() != 'n':
@@ -202,14 +204,4 @@ while True:
 
         print("File Saved")
         print("--------------------------------------------------")
-    elif userInput == '5':
-        # Ask user to enter name for csv file which he want to import
-        fileName = input("Enter file name: ")
-        # import the csv file
-        with open(fileName + '.csv', 'r') as csvfile:
-            reader = csv.reader(csvfile)
-            for row in reader:
-                print(row)
 
-        print("File Showed")
-        print("--------------------------------------------------")
